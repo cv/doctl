@@ -149,7 +149,29 @@ func addCommands() {
 	DoitCmd.AddCommand(Account())
 	DoitCmd.AddCommand(Auth())
 	DoitCmd.AddCommand(computeCmd())
+	DoitCmd.AddCommand(metricsCmd())
 	DoitCmd.AddCommand(Version())
+}
+
+func metricsCmd() *Command {
+	cmd := &Command{
+		Command: &cobra.Command{
+			Use:   "metrics",
+			Short: "metrics commands",
+			Long:  "metrics commands are for listing and gathering metrics",
+		},
+	}
+
+	CmdBuilder(cmd, RunMetricsChart, "chart", "plot a metric chart", Writer,
+		aliasOpt("c"), displayerType(&chart{}), docCategories("metrics"))
+
+	CmdBuilder(cmd, RunMetricsGet, "get", "get a metric", Writer,
+		aliasOpt("g"), displayerType(&metric{}), docCategories("metrics"))
+
+	CmdBuilder(cmd, RunMetricsList, "list", "list metrics", Writer,
+		aliasOpt("l"), displayerType(&metric{}), docCategories("metrics"))
+
+	return cmd
 }
 
 func computeCmd() *Command {
