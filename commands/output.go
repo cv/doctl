@@ -696,17 +696,34 @@ type metricList []*metric
 var _ Displayable = &metricList{}
 
 func (*metricList) Cols() []string {
-	return []string{}
+	return []string{"Name", "HumanName", "HumanDesc", "Unit"}
 }
 
 func (*metricList) ColMap() map[string]string {
-	return map[string]string{}
+	return map[string]string{
+		"Name":      "ID",
+		"HumanName": "Name",
+		"HumanDesc": "Description",
+		"Unit":      "Unit",
+	}
 }
 
-func (*metricList) KV() []map[string]interface{} {
-	return []map[string]interface{}{}
+func (m *metricList) KV() []map[string]interface{} {
+	out := []map[string]interface{}{}
+
+	for _, m := range *m {
+		out = append(out, map[string]interface{}{
+			"Name":      m.Name,
+			"HumanName": m.HumanName,
+			"HumanDesc": m.HumanDesc,
+			"Value":     fmt.Sprintf("%0.2f", m.Value),
+			"Unit":      m.Unit,
+		})
+	}
+
+	return out
 }
 
-func (*metricList) JSON(io.Writer) error {
-	return nil
+func (m *metricList) JSON(w io.Writer) error {
+	return writeJSON(m, w)
 }

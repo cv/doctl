@@ -28,6 +28,18 @@ func RunMetricsList(c *CmdConfig) error {
 			HumanDesc: "Average CPU utilization",
 			Unit:      "%",
 		},
+		&metric{
+			Name:      "disk_read",
+			HumanName: "Disk Read",
+			HumanDesc: "Disk - Read",
+			Unit:      "MB/s",
+		},
+		&metric{
+			Name:      "disk_utilization",
+			HumanName: "Disk utilization",
+			HumanDesc: "Average disk utilization on /",
+			Unit:      "%",
+		},
 	}
 
 	return c.Display(metrics)
