@@ -1,13 +1,34 @@
 package commands
 
 func RunMetricsChart(c *CmdConfig) error {
-	return c.Display(&chart{Link: "http://godo.internal.digitalocean.com/xxx.png"})
+	chart := &chart{
+		Link: "http://godo.internal.digitalocean.com/xxx.png",
+	}
+
+	return c.Display(chart)
 }
 
 func RunMetricsGet(c *CmdConfig) error {
-	return c.Display(&metric{})
+	metric := &metric{
+		Name:      "cpu_total",
+		HumanName: "CPU Total",
+		HumanDesc: "Average CPU utilization",
+		Unit:      "%",
+		Value:     0.843,
+	}
+
+	return c.Display(metric)
 }
 
 func RunMetricsList(c *CmdConfig) error {
-	return c.Display(&metric{})
+	metrics := &metricList{
+		&metric{
+			Name:      "cpu_total",
+			HumanName: "CPU Total",
+			HumanDesc: "Average CPU utilization",
+			Unit:      "%",
+		},
+	}
+
+	return c.Display(metrics)
 }

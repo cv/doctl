@@ -632,9 +632,11 @@ var _ Displayable = &chart{}
 func (*chart) Cols() []string {
 	return []string{"Link"}
 }
- 
+
 func (*chart) ColMap() map[string]string {
-	return map[string]string{"Link": "Link"}
+	return map[string]string{
+		"Link": "Link",
+	}
 }
 
 func (c *chart) KV() []map[string]interface{} {
@@ -650,22 +652,61 @@ func (c *chart) JSON(w io.Writer) error {
 }
 
 type metric struct {
+	Name      string
+	HumanName string
+	HumanDesc string
+	Unit      string
+	Value     float64
 }
 
 var _ Displayable = &metric{}
 
-func (*metric) Cols() []string {
+func (m *metric) Cols() []string {
+	return []string{"Name", "HumanName", "HumanDesc", "Value", "Unit"}
+}
+
+func (m *metric) ColMap() map[string]string {
+	return map[string]string{
+		"Name":      "ID",
+		"HumanName": "Name",
+		"HumanDesc": "Description",
+		"Value":     "Value",
+		"Unit":      "Unit",
+	}
+}
+
+func (m *metric) KV() []map[string]interface{} {
+	return []map[string]interface{}{
+		map[string]interface{}{
+			"Name":      m.Name,
+			"HumanName": m.HumanName,
+			"HumanDesc": m.HumanDesc,
+			"Value":     fmt.Sprintf("%0.2f", m.Value),
+			"Unit":      m.Unit,
+		},
+	}
+}
+
+func (m *metric) JSON(w io.Writer) error {
+	return writeJSON(m, w)
+}
+
+type metricList []*metric
+
+var _ Displayable = &metricList{}
+
+func (*metricList) Cols() []string {
 	return []string{}
 }
 
-func (*metric) ColMap() map[string]string {
+func (*metricList) ColMap() map[string]string {
 	return map[string]string{}
 }
 
-func (*metric) KV() []map[string]interface{} {
+func (*metricList) KV() []map[string]interface{} {
 	return []map[string]interface{}{}
 }
 
-func (*metric) JSON(io.Writer) error {
+func (*metricList) JSON(io.Writer) error {
 	return nil
 }
