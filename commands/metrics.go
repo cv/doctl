@@ -1,13 +1,13 @@
 package commands
 
-func RunMetricsChart(*CmdConfig) error {
-	return nil
+func RunMetricsChart(c *CmdConfig) error {
+	return c.Display(&chart{Link: "http://godo.internal.digitalocean.com/xxx.png"})
 }
 
-func RunMetricsGet(*CmdConfig) error {
-	return nil
+func RunMetricsGet(c *CmdConfig) error {
+	return c.Display(&metric{})
 }
 
-func RunMetricsList(*CmdConfig) error {
-	return nil
+func RunMetricsList(c *CmdConfig) error {
+	return c.Display(&metric{})
 }

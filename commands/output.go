@@ -624,26 +624,35 @@ func (a *volume) KV() []map[string]interface{} {
 }
 
 type chart struct {
+	Link string
 }
+
+var _ Displayable = &chart{}
 
 func (*chart) Cols() []string {
-	return []string{}
+	return []string{"Link"}
 }
-
+ 
 func (*chart) ColMap() map[string]string {
-	return map[string]string{}
+	return map[string]string{"Link": "Link"}
 }
 
-func (*chart) KV() []map[string]interface{} {
-	return []map[string]interface{}{}
+func (c *chart) KV() []map[string]interface{} {
+	return []map[string]interface{}{
+		map[string]interface{}{
+			"Link": c.Link,
+		},
+	}
 }
 
-func (*chart) JSON(io.Writer) error {
-	return nil
+func (c *chart) JSON(w io.Writer) error {
+	return writeJSON(c, w)
 }
 
 type metric struct {
 }
+
+var _ Displayable = &metric{}
 
 func (*metric) Cols() []string {
 	return []string{}
