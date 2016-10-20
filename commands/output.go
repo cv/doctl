@@ -622,3 +622,41 @@ func (a *volume) KV() []map[string]interface{} {
 	return out
 
 }
+
+type chart struct {
+}
+
+func (*chart) Cols() []string {
+	return []string{}
+}
+
+func (*chart) ColMap() map[string]string {
+	return map[string]string{}
+}
+
+func (*chart) KV() []map[string]interface{} {
+	return []map[string]interface{}{}
+}
+
+func (*chart) JSON(io.Writer) error {
+	return nil
+}
+
+type metric struct {
+}
+
+func (*metric) Cols() []string {
+	return []string{}
+}
+
+func (*metric) ColMap() map[string]string {
+	return map[string]string{}
+}
+
+func (*metric) KV() []map[string]interface{} {
+	return []map[string]interface{}{}
+}
+
+func (*metric) JSON(io.Writer) error {
+	return nil
+}
